@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState, type ComponentType, type ReactNode } from 'react';
+import { motion } from 'framer-motion';
 import { useWallet } from '@solana/wallet-adapter-react';
 import {
   ArrowDown,
@@ -214,9 +215,13 @@ function PageFrame({ children, narrow = false }: { children: ReactNode; narrow?:
 
 function Card({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <section className={cx('rounded-md border border-white/10 bg-black/35 shadow-[0_8px_24px_rgba(60,46,22,0.05)]', className)}>
+    <motion.section
+      className={cx('rounded-md border border-white/10 bg-black/35 shadow-premium transition-all duration-300 hover:border-white/15', className)}
+      whileHover={{ y: -2, boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)' }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+    >
       {children}
-    </section>
+    </motion.section>
   );
 }
 
@@ -310,24 +315,34 @@ function PathCard({
 }) {
   return (
     <Link href={href} className="group block h-full">
-      <Card className="flex h-full min-h-[330px] flex-col p-7 transition-colors group-hover:border-white/25 group-hover:bg-white/[0.06]">
-        <div className="mb-5 flex items-center justify-between">
-          <Eyebrow>
-            <span style={{ color: accent }}>{index} · {eyebrow}</span>
-          </Eyebrow>
-          <ArrowUpRight className="h-5 w-5 text-white transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-        </div>
-        <h3 className="min-h-[6rem] text-[2.45rem] font-normal leading-[1.14] tracking-normal text-white">{title}</h3>
-        <p className="mt-4 min-h-[6.75rem] text-base leading-7 text-white/70">{copy}</p>
-        <div className="mt-auto grid grid-cols-3 gap-4 border-t border-white/10 pt-5">
-          {stats.map((stat) => (
-            <div key={stat.label}>
-              <Eyebrow>{stat.label}</Eyebrow>
-              <div className="mt-2 font-mono text-base text-white">{stat.value}</div>
-            </div>
-          ))}
-        </div>
-      </Card>
+      <motion.div
+        whileHover={{ scale: 1.01 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+      >
+        <Card className="flex h-full min-h-[330px] flex-col p-7">
+          <div className="mb-5 flex items-center justify-between">
+            <Eyebrow>
+              <span style={{ color: accent }}>{index} · {eyebrow}</span>
+            </Eyebrow>
+            <motion.div
+              whileHover={{ y: -2, x: 2 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            >
+              <ArrowUpRight className="h-5 w-5 text-white" />
+            </motion.div>
+          </div>
+          <h3 className="min-h-[6rem] text-[2.45rem] font-normal leading-[1.14] tracking-normal text-white">{title}</h3>
+          <p className="mt-4 min-h-[6.75rem] text-base leading-7 text-white/70">{copy}</p>
+          <div className="mt-auto grid grid-cols-3 gap-4 border-t border-white/10 pt-5">
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <Eyebrow>{stat.label}</Eyebrow>
+                <div className="mt-2 font-mono text-base text-white">{stat.value}</div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </motion.div>
     </Link>
   );
 }

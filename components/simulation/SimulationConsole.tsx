@@ -2,6 +2,7 @@
 
 import { ChevronDown, ScrollText, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { Button } from '@/components/ui/button';
 import { useSimulationLog } from '@/hooks/useSimulationLog';
@@ -13,18 +14,25 @@ export function SimulationConsole() {
   return (
     <section className="rounded-lg border border-white/10 bg-black/55" aria-label="Simulation console">
       <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
-        <button
+        <motion.button
           type="button"
           onClick={() => setOpen((value) => !value)}
-          className="flex items-center gap-2 text-sm font-semibold text-white"
+          className="flex items-center gap-2 text-sm font-semibold text-white transition-colors hover:text-white/80"
+          whileHover={{ scale: 1.01 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
           <ScrollText className="h-4 w-4 text-white/55" />
           Simulation Console
           <span className="rounded-md bg-white/10 px-2 py-0.5 font-mono text-[10px] text-white/55">
             {entries.length}
           </span>
-          <ChevronDown className={['h-4 w-4 transition-transform', open ? 'rotate-180' : ''].join(' ')} />
-        </button>
+          <motion.div
+            animate={{ rotate: open ? 180 : 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          >
+            <ChevronDown className="h-4 w-4" />
+          </motion.div>
+        </motion.button>
         <Button
           type="button"
           variant="ghost"
@@ -37,14 +45,27 @@ export function SimulationConsole() {
         </Button>
       </div>
 
-      {open ? (
-        <div className="max-h-80 overflow-y-auto p-4 [scrollbar-width:thin]">
-          {entries.length === 0 ? (
-            <div className="py-10 text-center text-sm text-white/40">No transactions logged yet.</div>
-          ) : (
-            <div className="space-y-3">
-              {entries.map((entry) => (
-                <article key={entry.id} className="rounded-md border border-white/10 bg-white/[0.03] p-4">
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            className="max-h-80 overflow-y-auto p-4 [scrollbar-width:thin]"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          >
+            {entries.length === 0 ? (
+              <div className="py-10 text-center text-sm text-white/40">No transactions logged yet.</div>
+            ) : (
+              <motion.div className="space-y-3">
+                {entries.map((entry, index) => (
+                  <motion.article
+                    key={entry.id}
+                    className="rounded-md border border-white/10 bg-white/[0.03] p-4 shadow-premium transition-all hover:border-white/15 hover:bg-white/[0.05]"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ delay: index * 0.05, type: 'spring', stiffness: 300, damping: 30 }}
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="font-mono text-xs text-white/45">
                       [{new Date(entry.timestamp).toLocaleTimeString()}] {entry.role}
@@ -91,13 +112,14 @@ export function SimulationConsole() {
                       </tbody>
                     </table>
                   </div>
-                  <div className="mt-3 font-mono text-[11px] text-white/40">{entry.navSnapshot}</div>
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
-      ) : null}
+                    <div className="mt-3 font-mono text-[11px] text-white/40">{entry.navSnapshot}</div>
+                  </motion.article>
+                ))}
+              </motion.div>
+            )}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }

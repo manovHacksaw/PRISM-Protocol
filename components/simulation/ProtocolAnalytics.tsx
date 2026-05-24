@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { motion } from 'framer-motion';
 import {
   Activity,
   BarChart,
@@ -75,17 +76,34 @@ function MetricCard({ icon: Icon, label, value, sub, color = 'blue' }: any) {
   };
 
   return (
-    <div className="p-6 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05] transition-all group">
+    <motion.div
+      className="p-6 rounded-xl border border-white/[0.08] bg-white/[0.03] transition-all group shadow-premium"
+      whileHover={{ y: -2, boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)' }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+    >
       <div className="flex items-center justify-between mb-4">
         <div className={cx('p-2 rounded-lg bg-white/[0.04]', colors[color])}>
           <Icon className="h-5 w-5" />
         </div>
-        <span className="font-mono text-[10px] text-white/10 uppercase tracking-widest">Live</span>
+        <motion.span
+          className="font-mono text-[10px] text-purple-400/80 uppercase tracking-widest"
+          animate={{ opacity: [1, 0.6, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          Live
+        </motion.span>
       </div>
       <div className="font-mono text-[11px] uppercase tracking-widest text-white/30 mb-1">{label}</div>
-      <div className="font-mono text-3xl font-medium text-white/80 tabular-nums">{value}</div>
+      <motion.div
+        className="font-mono text-3xl font-medium text-white/80 tabular-nums"
+        initial={{ opacity: 0.5 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {value}
+      </motion.div>
       {sub && <div className="mt-2 font-mono text-[10px] text-white/20 uppercase tracking-tighter">{sub}</div>}
-    </div>
+    </motion.div>
   );
 }
 
