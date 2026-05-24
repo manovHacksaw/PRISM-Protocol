@@ -48,13 +48,13 @@ export function InfrastructureSection({ id = "infra" }: { id?: string }) {
           </span>
           
           <div className="grid lg:grid-cols-[auto_1fr] gap-6 lg:gap-10 items-stretch">
-            {/* Image globe — colonne gauche, pleine hauteur */}
+            {/* Image prism refraction — colonne gauche, pleine hauteur */}
             <div className={`hidden w-36 shrink-0 transition-all duration-1000 sm:block lg:w-52 xl:w-60 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}>
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/world-3i68QNWJwmO7W19ztZWbevAwJQHzYL.png"
-                alt="Global network sphere"
+                src="/images/prism-refraction.jpg"
+                alt="Prism refraction network visualization"
                 className="w-full h-full object-contain object-center"
               />
             </div>

@@ -207,14 +207,13 @@ export function FeaturesSection({ id = "features" }: { id?: string }) {
               </div>
             </div>
 
-            {/* Right: mirrored image, full height */}
+            {/* Right: prism tranches image, full height */}
             <div className="hidden lg:block relative w-[42%] shrink-0 overflow-hidden">
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2812%29-ng3RrNnsPMJ5CrtOjcPTmhHg01W11q.png"
-                alt=""
+                src="/images/prism-tranches.jpg"
+                alt="Prism tranches visualization"
                 aria-hidden="true"
                 className="absolute inset-0 w-full h-full object-cover object-center"
-                style={{ transform: "scaleX(-1)" }}
               />
               {/* Fade left edge into black */}
               <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent" />
