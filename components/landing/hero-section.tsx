@@ -121,18 +121,14 @@ export function HeroSection() {
 
   return (
     <section id="top" className="relative flex min-h-[100svh] flex-col items-start justify-center overflow-hidden bg-black">
-      {/* Background video */}
+      {/* Background prism image with animation */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src="/images/hero-prism-bg.jpg"
+          alt=""
           aria-hidden="true"
-          className="h-full w-full object-cover object-[74%_center] opacity-80 md:object-center"
-        >
-          <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bg-hero-0BnFGdr81Ifnj3WbBZoNt1KE4D5DMT.mp4" type="video/mp4" />
-        </video>
+          className="h-full w-full object-cover object-[74%_center] opacity-75 md:object-center animate-prism-shift"
+        />
         {/* Subtle overlay to ensure text readability on the left */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/55 to-transparent md:from-black/70 md:via-black/30" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
